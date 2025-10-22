@@ -1,0 +1,22 @@
+[Unit]
+Description=Raspberry Pi 3.5" LCD Print Dashboard
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Environment=DISPLAY_MODE=pygame
+Environment=FBDEV=/dev/fb1
+Environment=WIDTH=480
+Environment=HEIGHT=320
+Environment=REFRESH_SEC=3.0
+WorkingDirectory=/src/print
+ExecStart=/usr/bin/python3 /src/print/dashboard_poc.py
+# For framebuffer access and lpstat, root is simplest; can be tightened later
+User=root
+Group=root
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
