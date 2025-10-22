@@ -25,7 +25,7 @@ pip3 install --break-system-packages -r requirements.txt
 
 If your system python/pip doesn’t use `--break-system-packages`, omit it.
 
-## Run the PoC
+## How to run
 
 - PNG output (default):
 
