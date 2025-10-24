@@ -4,6 +4,8 @@ A tiny dashboard for a Raspberry Pi Zero with a 3.5" 480x320 LCD that shows prin
 
 CUPS service/printer status, queued jobs, Wi‑Fi IP, hostname/domain, Avahi (mDNS), uptime/load, CPU/disk/memory, CPU temperature etc.
 
+<img src="https://github.com/user-attachments/assets/fb9e1e83-6f56-4e21-9288-577755bf6fb8" width="500px">
+
 ## Having trouble getting LCD output?
 
 "Light" OS version didn't work for me. Try installing "Full". Then you can switch to boot to console.
