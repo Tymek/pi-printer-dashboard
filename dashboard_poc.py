@@ -244,6 +244,12 @@ def try_display_with_pygame(img: Image.Image) -> bool:
         pygame.display.update()
         return True
     except Exception:
+        # Surface/pygame errors can be silent under systemd; surface to stderr so journalctl captures it
+        try:
+            import traceback
+            traceback.print_exc()
+        except Exception:
+            pass
         return False
 
 
@@ -417,6 +423,12 @@ def try_display_with_fb(img: Image.Image) -> bool:
                 pass
         return True
     except Exception:
+        # Report exceptions to stderr so they appear in the journal
+        try:
+            import traceback
+            traceback.print_exc()
+        except Exception:
+            pass
         return False
 
 
@@ -508,6 +520,12 @@ def main():
             clear_display()
             break
         except Exception:
+            # Print tracebacks to stderr so systemd/journalctl records why the loop failed.
+            try:
+                import traceback
+                traceback.print_exc()
+            except Exception:
+                pass
             # Don't crash the loop if any collector/render error occurs
             time.sleep(REFRESH_SEC)
 

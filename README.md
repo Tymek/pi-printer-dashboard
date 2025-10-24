@@ -8,7 +8,7 @@ CUPS service/printer status, queued jobs, Wi‑Fi IP, CPU, temperature etc.
 
 ## Having trouble getting LCD output?
 
-"Light" OS version didn't work for me. Try installing "Full". Then you can switch to boot to console.
+"Light" OS version didn't work for me. Try installing "Full". Then you can switch to boot to console. You can check displays with `cat /proc/fb`. Mine is `1 fb_ili9486`. If console isn't showing up on the LCD, try `sudo con2fbmap 1 1`.
 
 ## Dependencies
 
@@ -64,3 +64,20 @@ Environment variables:
 - FBDEV: Framebuffer device (default `/dev/fb1`)
 - REFRESH_SEC: Seconds between refreshes (default `1.0`)
 - PRINTER: Filter queue size to a specific printer name
+
+## Raspberry CUPS LAN setup
+
+```
+sudo apt install cups avahi-daemon printer-driver-brlaser avahi-utils samba -y
+sudo usermod -aG lpadmin pi
+sudo tee /etc/systemd/system/cups.socket.d/override.conf >/dev/null <<'EOF'
+[Socket]
+ListenStream=
+ListenStream=631
+EOF
+sudo systemctl enable cups
+sudo systemctl start cups
+sudo cupsctl --share-printers
+sudo cupsctl WebInterface=Yes
+sudo cupsctl BrowseLocalProtocols=dnssd
+```
